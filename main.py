@@ -2,7 +2,7 @@ import asyncio
 
 from playwright.async_api import async_playwright
 
-from config import ROSTORG, SiteConfig
+from config import ROSTENDER, SiteConfig
 
 
 async def main(config: SiteConfig):
@@ -17,4 +17,4 @@ async def main(config: SiteConfig):
 
 # sites = [ROSTENDER, BIDZAAR, B2B, ROSTORG]
 # for site in sites:
-asyncio.run(main(ROSTORG))
+asyncio.run(main(ROSTENDER))

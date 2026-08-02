@@ -10,7 +10,6 @@ async def fill_and_search(page, input_name: str, fill_str: str):
     await page.wait_for_timeout(10000)
 
 
-async def get_html(page, name_file: str):
+async def get_html(page):
     html = await page.content()
-    with open(f"{name_file}.html", "w") as f:
-        f.write(html)
+    return html

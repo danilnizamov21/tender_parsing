@@ -1,3 +1,4 @@
+from pars_data.prepare_pars import prepare_pars_rostender
 from utils import fill_and_search, get_html, press_button
 
 
@@ -6,7 +7,8 @@ async def prepare_rostender(page, config):
     if config.exception_serch is not None:
         await fill_and_search(page, "#exceptions", config.exception_serch)
     await press_button(page, "#start-search-button")
-    await get_html(page, config.output_filename)
+    html = await get_html(page)
+    await prepare_pars_rostender(html)
 
 
 async def prepare_bidzaar(page, config):

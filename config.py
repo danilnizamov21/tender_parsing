@@ -29,9 +29,7 @@ BIDZAAR = SiteConfig(
     prepare_bidzaar,
 )
 
-B2B = SiteConfig(
-    "https://www.b2b-center.ru/market/", "Видеосъемка", None, "b2b", prepare_b2b
-)
+B2B = SiteConfig("https://www.b2b-center.ru/market/", "трубы", None, "b2b", prepare_b2b)
 
 ROSTORG = SiteConfig(
     "https://www.roseltorg.ru/procedures/search",

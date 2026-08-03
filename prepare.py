@@ -1,4 +1,9 @@
-from pars_data.prepare_pars import prepare_pars_rostender
+from pars_data.prepare_pars import (
+    prepare_pars_b2b,
+    prepare_pars_bidzaar,
+    prepare_pars_rostender,
+    prepare_pars_rostorg,
+)
 from utils import fill_and_search, get_html, press_button
 
 
@@ -13,14 +18,17 @@ async def prepare_rostender(page, config):
 
 async def prepare_bidzaar(page, config):
     await fill_and_search(page, "#mat-input-bidzaar0", config.search)
-    await get_html(page, config.output_filename)
+    html = await get_html(page)
+    await prepare_pars_bidzaar(html)
 
 
 async def prepare_b2b(page, config):
     await fill_and_search(page, "#f_keyword", config.search)
-    await get_html(page, config.output_filename)
+    html = await get_html(page)
+    await prepare_pars_b2b(html)
 
 
 async def prepare_rostorg(page, config):
     await fill_and_search(page, "input[name='query_field']", config.search)
-    await get_html(page, config.output_filename)
+    html = await get_html(page)
+    await prepare_pars_rostorg(html)

@@ -16,9 +16,3 @@ async def get_html(page):
     """Получение html страницы"""
     html = await page.content()
     return html
-
-
-async def get_current_url(page):
-    """Получение текущего URL"""
-    current_url = await page.url
-    return current_url

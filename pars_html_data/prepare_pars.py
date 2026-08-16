@@ -1,4 +1,4 @@
-from pars_data.utils_pars import (
+from pars_html_data.utils_pars import (
     create_xml,
     get_href_from_a,
     get_parent_tag,
@@ -6,6 +6,11 @@ from pars_data.utils_pars import (
     get_tag_a,
     get_title_from_a,
 )
+
+
+async def get_pagination_max_counter(html):
+    soup = await create_xml(html)
+    parent = await get_parent_tag(soup, "div", "pagination")
 
 
 async def prepare_pars_rostender(html):

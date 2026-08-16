@@ -38,3 +38,6 @@ async def get_title_from_a(tag_a) -> str | None:
     """Получение описания внутри тега <a>"""
     title = tag_a["title"]
     return title
+
+async def get_pagination_counter(parent):
+    

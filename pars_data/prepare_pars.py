@@ -9,6 +9,7 @@ from pars_data.utils_pars import (
 
 
 async def prepare_pars_rostender(html):
+
     soup = await create_xml(html)
     parents = await get_parent_tag(soup, "article")
     for parent in parents:

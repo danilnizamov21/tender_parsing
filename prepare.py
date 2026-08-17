@@ -1,13 +1,20 @@
 from pars_html_data.prepare_pars import (
+    get_pagination_max_counter,
     prepare_pars_b2b,
     prepare_pars_bidzaar,
+    prepare_pars_rostender,
     prepare_pars_rostorg,
 )
 from utils import fill_and_search, get_html, press_button
 
 
-async def retrieving_html(url: str):
-    pass
+async def retrieving_html(page, url: str, pagi_counter: int, c: int):
+    c = 0
+    while c != pagi_counter:
+        c += 1
+        url = url + f"&{c}"
+        html = await get_html(page)
+        await prepare_pars_rostender(html)
 
 
 async def prepare_rostender(page, config):
@@ -15,7 +22,10 @@ async def prepare_rostender(page, config):
     if config.exception_serch is not None:
         await fill_and_search(page, "#exceptions", config.exception_serch)
     await press_button(page, "#start-search-button")
+    current_url = page.url
     html = await get_html(page)
+    pagi = await get_pagination_max_counter(html)
+    print(pagi)
 
     # await prepare_pars_rostender(html)
     url = page.url

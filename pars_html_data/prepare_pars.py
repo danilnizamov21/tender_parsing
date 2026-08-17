@@ -10,7 +10,11 @@ from pars_html_data.utils_pars import (
 
 async def get_pagination_max_counter(html):
     soup = await create_xml(html)
-    parent = await get_parent_tag(soup, "div", "pagination")
+    parent = await get_parent_tag(soup, "div", "paginationWrapper")
+    get_page = await get_tag_a(parent)
+
+    # get_all_tag_with_pagi = await get_tag(parent, "вши ", "disabled")
+    return get_page
 
 
 async def prepare_pars_rostender(html):

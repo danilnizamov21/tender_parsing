@@ -8,13 +8,15 @@ from pars_html_data.prepare_pars import (
 from utils import fill_and_search, get_html, press_button
 
 
-async def retrieving_html(page, url: str, pagi_counter: int, c: int):
+async def retrieving_html(page, url: str, pagi_counter: int):
     c = 0
     while c != pagi_counter:
         c += 1
-        url = url + f"&{c}"
+        new_url = url + f"&page={c}"
+        await page.goto(new_url)
         html = await get_html(page)
         await prepare_pars_rostender(html)
+        await page.wait_for_timeout(5000)
 
 
 async def prepare_rostender(page, config):
@@ -25,7 +27,7 @@ async def prepare_rostender(page, config):
     current_url = page.url
     html = await get_html(page)
     pagi = await get_pagination_max_counter(html)
-    await prepare_pars_rostender(html)
+    await retrieving_html(page, current_url, pagi)
 
     # await prepare_pars_rostender(html)
     url = page.url

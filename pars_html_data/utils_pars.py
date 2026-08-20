@@ -6,13 +6,27 @@ async def create_xml(html):
     return soup
 
 
-async def get_parent_tag(soup, tag: str, class_name=None):
+async def get_all_parent_tag(
+    soup,
+    tag: str,
+    class_name=None,
+):
     """Получение родительского тега"""
+
     if class_name is None:
         parents = soup.find_all(tag)
     else:
         parents = soup.find_all(tag, class_=class_name)
+
     return parents
+
+
+async def get_parent_tag(soup, tag, class_name):
+    if class_name is None:
+        parent = soup.find(tag)
+    else:
+        parent = soup.find(tag, class_=class_name)
+    return parent
 
 
 async def get_tag_a(parent):

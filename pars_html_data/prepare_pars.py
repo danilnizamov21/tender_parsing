@@ -1,5 +1,6 @@
 from pars_html_data.utils_pars import (
     create_xml,
+    get_all_parent_tag,
     get_href_from_a,
     get_parent_tag,
     get_tag,
@@ -11,16 +12,17 @@ from pars_html_data.utils_pars import (
 async def get_pagination_max_counter(html):
     soup = await create_xml(html)
     parent = await get_parent_tag(soup, "div", "paginationWrapper")
-    get_page = await get_tag_a(parent)
+    get_input_tag = await get_tag(parent, "input", "form-control")
+    max_counter = get_input_tag.get("max")
 
     # get_all_tag_with_pagi = await get_tag(parent, "вши ", "disabled")
-    return get_page
+    return max_counter
 
 
 async def prepare_pars_rostender(html):
 
     soup = await create_xml(html)
-    parents = await get_parent_tag(soup, "article")
+    parents = await get_all_parent_tag(soup, "article")
     for parent in parents:
         a = await get_tag_a(parent)
         title = await get_title_from_a(a)

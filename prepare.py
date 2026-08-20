@@ -25,7 +25,7 @@ async def prepare_rostender(page, config):
     current_url = page.url
     html = await get_html(page)
     pagi = await get_pagination_max_counter(html)
-    print(pagi)
+    await prepare_pars_rostender(html)
 
     # await prepare_pars_rostender(html)
     url = page.url

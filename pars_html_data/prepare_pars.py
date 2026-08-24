@@ -1,4 +1,6 @@
-from openpyxl import Workbook
+import os
+
+from openpyxl import Workbook, load_workbook
 
 from pars_html_data.utils_pars import (
     create_xml,
@@ -20,13 +22,32 @@ async def get_pagination_max_counter(html):
     return max_counter
 
 
-async def prepare_pars_rostender(html):
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "Ростендер"
+def save_to_excel(data, filename="rostender_results.xlsx"):
+    """Функция для сохранения данных в Excel"""
+    try:
+        if os.path.exists(filename):
+            wb = load_workbook(filename)
+            ws = wb.active
+        else:
+            wb = Workbook()
+            ws = wb.active
+            ws.title = "Ростендер"
 
-    headers = ["Название", "Ссылка", "Стоимость", "Дата"]
-    ws.append(headers)
+            headers = ["Название", "Ссылка", "Стоимость", "Дата"]
+            ws.append(headers)
+
+        for item in data:
+            ws.append([item["title"], item["href"], item["cost"], item["day"]])
+
+        wb.save(filename)
+        print(f"Добавлено {len(data)} записей в {filename}")
+
+    except Exception as e:
+        print(f"Ошибка при сохранении: {e}")
+
+
+async def prepare_pars_rostender(html):
+    data = []
 
     soup = await create_xml(html)
     parents = await get_all_parent_tag(soup, "article")
@@ -38,12 +59,17 @@ async def prepare_pars_rostender(html):
             parent, "div", "starting-price__price starting-price--price"
         )
         span = await get_tag(parent, "span", "black")
-        print(
-            f"title={title} \n href = {href} \n cost={div.get_text()} \n day={span.get_text()}"
+
+        data.append(
+            {
+                "title": title,
+                "href": href,
+                "cost": div.get_text(),
+                "day": span.get_text(),
+            }
         )
-        ws.append([title, href, div.get_text(), span.get_text()])
-    wb.save("rostender_results.xlsx")
-    print("Данные сохранены в rostender_results.xlsx")
+
+    return data
 
 
 async def prepare_pars_b2b(html):

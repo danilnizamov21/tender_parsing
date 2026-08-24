@@ -1,7 +1,12 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from prepare import prepare_b2b, prepare_bidzaar, prepare_rostender, prepare_rostorg
+from get_html import (
+    html_b2b,
+    html_bidzaar,
+    html_rostender,
+    html_rostorg,
+)
 
 
 @dataclass
@@ -18,7 +23,7 @@ ROSTENDER = SiteConfig(
     "Видеосъемка",
     "поставка",
     "rostender",
-    prepare_rostender,
+    html_rostender,
 )
 
 BIDZAAR = SiteConfig(
@@ -26,15 +31,15 @@ BIDZAAR = SiteConfig(
     "Видеосъемка",
     None,
     "bidzaar",
-    prepare_bidzaar,
+    html_bidzaar,
 )
 
-B2B = SiteConfig("https://www.b2b-center.ru/market/", "трубы", None, "b2b", prepare_b2b)
+B2B = SiteConfig("https://www.b2b-center.ru/market/", "трубы", None, "b2b", html_b2b)
 
 ROSTORG = SiteConfig(
     "https://www.roseltorg.ru/procedures/search",
     "Видеосъемка",
     None,
     "rostorg",
-    prepare_rostorg,
+    html_rostorg,
 )

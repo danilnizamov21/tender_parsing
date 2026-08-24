@@ -1,3 +1,5 @@
+from openpyxl import Workbook
+
 from pars_html_data.utils_pars import (
     create_xml,
     get_all_parent_tag,
@@ -15,11 +17,16 @@ async def get_pagination_max_counter(html):
     get_input_tag = await get_tag(parent, "input", "form-control")
     max_counter = get_input_tag.get("max")
 
-    # get_all_tag_with_pagi = await get_tag(parent, "вши ", "disabled")
     return max_counter
 
 
 async def prepare_pars_rostender(html):
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Ростендер"
+
+    headers = ["Название", "Ссылка", "Стоимость", "Дата"]
+    ws.append(headers)
 
     soup = await create_xml(html)
     parents = await get_all_parent_tag(soup, "article")
@@ -34,6 +41,9 @@ async def prepare_pars_rostender(html):
         print(
             f"title={title} \n href = {href} \n cost={div.get_text()} \n day={span.get_text()}"
         )
+        ws.append([title, href, div.get_text(), span.get_text()])
+    wb.save("rostender_results.xlsx")
+    print("Данные сохранены в rostender_results.xlsx")
 
 
 async def prepare_pars_b2b(html):

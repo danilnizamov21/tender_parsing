@@ -3,7 +3,6 @@ from pars_html_data.prepare_pars import (
     prepare_pars_b2b,
     prepare_pars_bidzaar,
     prepare_pars_rostender,
-    prepare_pars_rostorg,
     save_to_excel,
 )
 from utils import fill_and_search, get_html, press_button
@@ -31,7 +30,7 @@ async def html_rostender(page, config):
     current_url = page.url
     html = await get_html(page)
     pagi = await get_pagination_max_counter(html)
-    await retrieving_html(page, current_url, pagi)
+    await pagination(page, current_url, pagi)
 
 
 async def html_bidzaar(page, config):
@@ -48,5 +47,6 @@ async def html_b2b(page, config):
 
 async def html_rostorg(page, config):
     await fill_and_search(page, "input[name='query_field']", config.search)
-    html = await get_html(page)
-    await prepare_pars_rostorg(html)
+    current_url = page.url
+
+    await pagination(page, current_url, 50)

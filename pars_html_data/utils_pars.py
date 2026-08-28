@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 
 
-async def create_xml(html):
+def create_xml(html):
     soup = BeautifulSoup(html, "lxml")
     return soup
 

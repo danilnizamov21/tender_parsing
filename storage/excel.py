@@ -6,6 +6,7 @@ HEADERS = ("Источник", "Название", "ССылка", "Стоимо
 
 
 def save_tenders(path: str, rows: list[Tender]) -> None:
+    """Функция сохранения данных парсеров в xlsx документ. Данные распределены по заголовкам(HEADERS)"""
     wb = Workbook()
     ws = wb.active
     ws.title = "Тендеры"

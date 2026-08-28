@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Tender:
+class Tender:  # список который будет возвращать каждый парсер
     source: str
     title: str
     url: str

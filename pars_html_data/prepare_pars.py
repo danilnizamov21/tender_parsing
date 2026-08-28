@@ -49,7 +49,7 @@ def save_to_excel(data, filename="rostender_results.xlsx"):
 async def prepare_pars_rostender(html):
     data = []
 
-    soup = await create_xml(html)
+    soup = create_xml(html)
     parents = await get_all_parent_tag(soup, "article")
     for parent in parents:
         a = await get_tag_a(parent)

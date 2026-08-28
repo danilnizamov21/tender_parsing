@@ -6,7 +6,7 @@ def create_xml(html):
     return soup
 
 
-async def get_all_parent_tag(
+def get_all_parent_tag(
     soup,
     tag: str,
     class_name=None,
@@ -21,7 +21,7 @@ async def get_all_parent_tag(
     return parents
 
 
-async def get_parent_tag(soup, tag, class_name):
+def get_parent_tag(soup, tag, class_name):
     if class_name is None:
         parent = soup.find(tag)
     else:
@@ -29,26 +29,26 @@ async def get_parent_tag(soup, tag, class_name):
     return parent
 
 
-async def get_tag_a(parent):
+def get_tag_a(parent):
     """Получение тега <a>.Для получения требуятся тэг родитель"""
     tag_a = parent.a
     return tag_a
 
 
-async def get_tag(parent, tag, class_name: str):
+def get_tag(parent, tag, class_name: str):
     """Получение любого тега внутри родительского класса"""
     div = parent.find(tag, class_=class_name)
 
     return div
 
 
-async def get_href_from_a(tag_a) -> str | None:
+def get_href_from_a(tag_a) -> str | None:
     """Получение ссылки из тега <a>"""
     href = tag_a["href"]
     return href
 
 
-async def get_title_from_a(tag_a) -> str | None:
+def get_title_from_a(tag_a) -> str | None:
     """Получение описания внутри тега <a>"""
     title = tag_a["title"]
     return title

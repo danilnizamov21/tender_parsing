@@ -7,17 +7,18 @@ from storage.excel import save_tenders
 class SiteRunner:
     async def run(self, site, page: Page) -> None:
 
-        await page.goto(site.url)
+        await page.goto(site.settings.url)
         await site.search(page)
 
         html = await get_html(page)
 
-        rows = list(site.parse(html))
-        urls = site.urls(page.url, html)
+        rows = list(await site.page_parse(html))
+        urls = await site.urls(page.url, html)
         if urls:
             for url in urls:
                 await page.goto(url)
                 html = await get_html(page)
-                rows.extend(site.page_parse(html))
+                rows.extend(await site.page_parse(html))
+                print("ADD ROWS")
         path = f"{site.settings.output_filename}.xlsx"
         save_tenders(path, rows)

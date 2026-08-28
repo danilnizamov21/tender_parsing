@@ -14,37 +14,36 @@ from pars_html_data.utils_pars import (
 )
 
 
-async def max_page(html: str) -> int:
+def max_page(html: str) -> int:
     """Получение максимального кол-во страниц для пагинации"""
-    soup = await create_xml(html)
-    parent = await get_parent_tag(soup, "div", "paginationWrapper")
-    get_input_tag = await get_tag(parent, "input", "form-control")
+    soup = create_xml(html)
+    parent = get_parent_tag(soup, "div", "paginationWrapper")
+    get_input_tag = get_tag(parent, "input", "form-control")
     max_counter = get_input_tag.get("max")
 
     return max_counter
 
 
-async def parse(html: str) -> list[Tender]:
+def parse(html: str) -> list[Tender]:
     data = []
 
     soup = create_xml(html)
-    parents = await get_all_parent_tag(soup, "article")
+    parents = get_all_parent_tag(soup, "article")
     for parent in parents:
-        a = await get_tag_a(parent)
-        title = await get_title_from_a(a)
-        href = await get_href_from_a(a)
-        div = await get_tag(
-            parent, "div", "starting-price__price starting-price--price"
-        )
-        span = await get_tag(parent, "span", "black")
+        a = get_tag_a(parent)
+        title = get_title_from_a(a)
+        href = get_href_from_a(a)
+        div = get_tag(parent, "div", "starting-price__price starting-price--price")
+        span = get_tag(parent, "span", "black")
 
         data.append(
-            {
-                "title": title,
-                "href": href,
-                "cost": div.get_text(),
-                "day": span.get_text(),
-            }
+            Tender(
+                source="rostender",
+                title=title or "",
+                url=f"https://rostender.info{href}" or "",
+                price=div.get_text(strip=True) if div else None,
+                deadline=span.get_text(strip=True) if span else None,
+            )
         )
 
     return data
@@ -56,19 +55,19 @@ class RostenderSite:
 
     async def search(self, page: Page):
         """Поиск внутри сайта по ключевым словам с возможностью добавление слов исключений"""
-        await fill(page, "#keywords", self.settings.search)
+        await fill(page, self.settings.search_input, self.settings.search)
         if self.settings.exception_serch is not None:
-            await fill(page, "#exceptions", self.settings.exception_serch)
+            await fill(page, self.settings.exlude_input, self.settings.exception_serch)
 
-        await click(page, "#start-search-button")
+        await click(page, self.settings.search_button)
 
-    def urls(self, url: str, html: str) -> list[str]:
+    async def urls(self, url: str, html: str) -> list[str]:
         """Созданиесписка URLов для пагинации"""
-        pagi = max_page(html)
+        pagi = int(max_page(html))
         urls = []
-        for i in range(1, pagi + 1):
+        for i in range(1, 4):
             urls.append(url + f"&page={i}")
         return urls
 
-    def page_parse(html: str) -> list[Tender]:
+    async def page_parse(self, html: str) -> list[Tender]:
         return parse(html)

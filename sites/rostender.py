@@ -1,5 +1,3 @@
-from logging import config
-
 from playwright.async_api import Page
 
 from browser.actions import click, fill
@@ -58,9 +56,9 @@ class RostenderSite:
 
     async def search(self, page: Page):
         """Поиск внутри сайта по ключевым словам с возможностью добавление слов исключений"""
-        await fill(page, "#keywords", config.search)
-        if config.exception_serch is not None:
-            await fill(page, "#exceptions", config.exception_serch)
+        await fill(page, "#keywords", self.settings.search)
+        if self.settings.exception_serch is not None:
+            await fill(page, "#exceptions", self.settings.exception_serch)
 
         await click(page, "#start-search-button")
 

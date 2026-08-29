@@ -1,15 +1,9 @@
-import os
-
-from openpyxl import Workbook, load_workbook
-
 from pars_html_data.utils_pars import (
     create_xml,
-    get_all_parent_tag,
     get_href_from_a,
     get_parent_tag,
     get_tag,
     get_tag_a,
-    get_title_from_a,
 )
 
 
@@ -20,56 +14,6 @@ async def get_pagination_max_counter(html):
     max_counter = get_input_tag.get("max")
 
     return max_counter
-
-
-def save_to_excel(data, filename="rostender_results.xlsx"):
-    """Функция для сохранения данных в Excel"""
-    try:
-        if os.path.exists(filename):
-            wb = load_workbook(filename)
-            ws = wb.active
-        else:
-            wb = Workbook()
-            ws = wb.active
-            ws.title = "Ростендер"
-
-            headers = ["Название", "Ссылка", "Стоимость", "Дата"]
-            ws.append(headers)
-
-        for item in data:
-            ws.append([item["title"], item["href"], item["cost"], item["day"]])
-
-        wb.save(filename)
-        print(f"Добавлено {len(data)} записей в {filename}")
-
-    except Exception as e:
-        print(f"Ошибка при сохранении: {e}")
-
-
-async def prepare_pars_rostender(html):
-    data = []
-
-    soup = create_xml(html)
-    parents = await get_all_parent_tag(soup, "article")
-    for parent in parents:
-        a = await get_tag_a(parent)
-        title = await get_title_from_a(a)
-        href = await get_href_from_a(a)
-        div = await get_tag(
-            parent, "div", "starting-price__price starting-price--price"
-        )
-        span = await get_tag(parent, "span", "black")
-
-        data.append(
-            {
-                "title": title,
-                "href": href,
-                "cost": div.get_text(),
-                "day": span.get_text(),
-            }
-        )
-
-    return data
 
 
 async def prepare_pars_b2b(html):

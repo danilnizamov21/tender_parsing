@@ -65,7 +65,7 @@ class RostenderSite:
         """Созданиесписка URLов для пагинации"""
         pagi = int(max_page(html))
         urls = []
-        for i in range(1, 4):
+        for i in range(1, pagi + 1):
             urls.append(url + f"&page={i}")
         return urls
 

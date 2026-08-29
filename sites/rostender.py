@@ -1,6 +1,6 @@
 from playwright.async_api import Page
 
-from browser.actions import click, fill
+from browser.helpers import search
 from config import SiteConfig
 from domain.models import Tender
 from pars_html_data.utils_pars import (
@@ -53,13 +53,9 @@ class RostenderSite:
     def __init__(self, settings: SiteConfig):
         self.settings = settings
 
-    async def search(self, page: Page):
+    async def page_search(self, page: Page):
         """Поиск внутри сайта по ключевым словам с возможностью добавление слов исключений"""
-        await fill(page, self.settings.search_input, self.settings.search)
-        if self.settings.exception_serch is not None:
-            await fill(page, self.settings.exlude_input, self.settings.exception_serch)
-
-        await click(page, self.settings.search_button)
+        return await search(page, self.settings)
 
     async def urls(self, url: str, html: str) -> list[str]:
         """Созданиесписка URLов для пагинации"""

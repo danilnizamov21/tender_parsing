@@ -8,7 +8,7 @@ class SiteRunner:
     async def run(self, site, page: Page) -> None:
 
         await page.goto(site.settings.url)
-        await site.search(page)
+        await site.page_search(page)
 
         html = await get_html(page)
 

@@ -5,7 +5,7 @@ from config import SiteConfig
 from domain.models import Tender
 
 
-class SiteBidzaar:
+class BidzaarSite:
     def __init__(self, settings: SiteConfig):
         self.settings = settings
 
@@ -13,5 +13,9 @@ class SiteBidzaar:
         """Поиск внутри сайта по ключевым словам с возможностью добавление слов исключений"""
         return await search(page, self.settings)
 
+    async def urls(self, url: str, html: str) -> list[str]:
+
+        return False
+
     async def page_parse(self, html: str) -> list[Tender]:
-        return parse(html)
+        return await parse(html, self.settings)

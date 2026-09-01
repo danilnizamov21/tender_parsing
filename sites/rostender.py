@@ -24,7 +24,7 @@ def max_page(html: str) -> int:
     return max_counter
 
 
-def parse(html: str) -> list[Tender]:
+def _parse(html: str) -> list[Tender]:
     data = []
 
     soup = create_xml(html)
@@ -66,4 +66,4 @@ class RostenderSite:
         return urls
 
     async def page_parse(self, html: str) -> list[Tender]:
-        return parse(html)
+        return _parse(html)

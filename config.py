@@ -32,20 +32,40 @@ ROSTENDER = SiteConfig(
     None,
 )
 
-# BIDZAAR = SiteConfig(
-#     "https://bidzaar.com/app/requests/public/buy",
-#     "Видеосъемка",
-#     None,
-#     "bidzaar",
-#     bidzaar,
-# )
+BIDZAAR = SiteConfig(
+    url="https://bidzaar.com/app/requests/public/buy",
+    search="Видеосъемка",
+    exception_serch=None,
+    output_filename="bidzaar",
+    search_input="#mat-input-bidzaar0",
+    exlude_input=None,
+    search_button=None,
+    parents_tag="li",
+    title_tag="span",
+    title_classname="name-item ui-name with-dot",
+    day_tag="div",
+    day_classname="date",
+)
 
-# B2B = SiteConfig("https://www.b2b-center.ru/market/", "трубы", None, "b2b", html_b2b)
+B2B = SiteConfig(
+    url="https://www.b2b-center.ru/market/",
+    search="трубы",
+    exception_serch=None,
+    output_filename="b2b",
+    search_input="#f_keyword",
+    exlude_input=None,
+    search_button=None,
+    parents_tag="tr",
+    title_tag="div",
+    title_classname="search-results-title-desc",
+    day_tag="td",
+    day_classname="nowrap",
+)
 
 # ROSTORG = SiteConfig(
-#     "https://www.roseltorg.ru/procedures/search",
-#     "Видеосъемка",
-#     None,
-#     "rostorg",
-#     html_rostorg,
+#     url="https://www.roseltorg.ru/procedures/search",
+#     search="Видеосъемка",
+#     exception_serch=None,
+#     output_filename="rostorg",
+#     search_input=html_rostorg,
 # )

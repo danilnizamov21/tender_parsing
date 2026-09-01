@@ -15,19 +15,19 @@ async def search(page, settings: SiteConfig):
     await fill(page, settings.search_input, settings.search)
     if settings.exception_serch is not None:
         await fill(page, settings.exlude_input, settings.exception_serch)
-
-    await click(page, settings.search_button)
+    if settings.search_button is not None:
+        await click(page, settings.search_button)
 
 
 async def parse(html: str, settings: SiteConfig) -> list[Tender]:
     data = []
-    soup = await create_xml(html)
-    parents = await get_parent_tag(soup, settings.parents_tag)  # parents_tag
+    soup = create_xml(html)
+    parents = get_parent_tag(soup, settings.parents_tag)  # parents_tag
     for parent in parents:
-        a = await get_tag_a(parent)
-        href = await get_href_from_a(a)
-        title = await get_tag(parent, settings.title_tag, settings.title_classname)
-        day = await get_tag(parent, settings.day_tag, settings)
+        a = get_tag_a(parent)
+        href = get_href_from_a(a)
+        title = get_tag(parent, settings.title_tag, settings.title_classname)
+        day = get_tag(parent, settings.day_tag, settings)
 
         data.append(
             Tender(

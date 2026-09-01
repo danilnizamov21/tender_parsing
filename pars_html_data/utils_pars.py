@@ -21,7 +21,7 @@ def get_all_parent_tag(
     return parents
 
 
-def get_parent_tag(soup, tag, class_name):
+def get_parent_tag(soup, tag, class_name=None):
     if class_name is None:
         parent = soup.find(tag)
     else:

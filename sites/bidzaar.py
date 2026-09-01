@@ -1,7 +1,8 @@
 from playwright.async_api import Page
 
-from browser.helpers import search
+from browser.helpers import parse, search
 from config import SiteConfig
+from domain.models import Tender
 
 
 class SiteBidzaar:

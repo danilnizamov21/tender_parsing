@@ -10,6 +10,11 @@ class SiteConfig:
     search_input: str
     exlude_input: str | None
     search_button: str | None
+    parents_tag: str | None
+    title_tag: str | None
+    title_classname: str | None
+    day_tag: str | None
+    day_classname: str | None
 
 
 ROSTENDER = SiteConfig(
@@ -20,6 +25,11 @@ ROSTENDER = SiteConfig(
     "#keywords",
     "#exceptions",
     "#start-search-button",
+    None,
+    None,
+    None,
+    None,
+    None,
 )
 
 # BIDZAAR = SiteConfig(
@@ -27,7 +37,7 @@ ROSTENDER = SiteConfig(
 #     "Видеосъемка",
 #     None,
 #     "bidzaar",
-#     html_bidzaar,
+#     bidzaar,
 # )
 
 # B2B = SiteConfig("https://www.b2b-center.ru/market/", "трубы", None, "b2b", html_b2b)

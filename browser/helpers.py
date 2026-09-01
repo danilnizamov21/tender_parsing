@@ -1,5 +1,13 @@
 from browser.actions import click, fill
 from config import SiteConfig
+from domain.models import Tender
+from pars_html_data.utils_pars import (
+    create_xml,
+    get_href_from_a,
+    get_parent_tag,
+    get_tag,
+    get_tag_a,
+)
 
 
 async def search(page, settings: SiteConfig):
@@ -11,16 +19,22 @@ async def search(page, settings: SiteConfig):
     await click(page, settings.search_button)
 
 
-async def parse():
+async def parse(html: str, settings: SiteConfig) -> list[Tender]:
+    data = []
     soup = await create_xml(html)
-    parents = await get_parent_tag(soup, "tr")
+    parents = await get_parent_tag(soup, settings.parents_tag)  # parents_tag
     for parent in parents:
         a = await get_tag_a(parent)
         href = await get_href_from_a(a)
-        title = await get_tag(parent, "div", "search-results-title-desc")
-        day = await get_tag(parent, "td", "nowrap")
+        title = await get_tag(parent, settings.title_tag, settings.title_classname)
+        day = await get_tag(parent, settings.day_tag, settings)
 
-        title_text = title.get_text(strip=True) if title else "N/A"
-        day_text = day.get_text(strip=True) if day else "N/A"
-
-        print(f"title={title_text} \n href = {href} \n cost= - \n day={day_text}")
+        data.append(
+            Tender(
+                source="",
+                title=title.get_text(strip=True) if title else None,
+                url=href,
+                price=None,
+                deadline=day.get_text(strip=True) if day else None,
+            )
+        )

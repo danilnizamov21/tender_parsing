@@ -26,6 +26,7 @@ async def parse(html: str, settings: SiteConfig) -> list[Tender]:
 
     for parent in parents:
         a = get_tag_a(parent)
+        print(a)
         href = get_href_from_a(a) if a else None
         if not href:
             continue

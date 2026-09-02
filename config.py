@@ -34,7 +34,7 @@ ROSTENDER = SiteConfig(
 
 BIDZAAR = SiteConfig(
     url="https://bidzaar.com/app/requests/public/buy",
-    search="Видеосъемка",
+    search="трубы",
     exception_serch=None,
     output_filename="bidzaar",
     search_input="#mat-input-bidzaar0",

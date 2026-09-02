@@ -30,8 +30,7 @@ def get_parent_tag(soup, tag, class_name=None):
 
 
 def get_tag_a(parent):
-    """Получение тега <a>.Для получения требуятся тэг родитель"""
-    tag_a = parent.a
+    tag_a = parent.find("a", attrs={"data-testid": "prs-public-info-link"})
     return tag_a
 
 

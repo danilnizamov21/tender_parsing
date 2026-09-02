@@ -3,8 +3,8 @@ from config import SiteConfig
 from domain.models import Tender
 from pars_html_data.utils_pars import (
     create_xml,
+    get_all_parent_tag,
     get_href_from_a,
-    get_parent_tag,
     get_tag,
     get_tag_a,
 )
@@ -22,19 +22,23 @@ async def search(page, settings: SiteConfig):
 async def parse(html: str, settings: SiteConfig) -> list[Tender]:
     data = []
     soup = create_xml(html)
-    parents = get_parent_tag(soup, settings.parents_tag)  # parents_tag
+    parents = get_all_parent_tag(soup, settings.parents_tag)
+
     for parent in parents:
         a = get_tag_a(parent)
-        href = get_href_from_a(a)
+        href = get_href_from_a(a) if a else None
+        if not href:
+            continue
         title = get_tag(parent, settings.title_tag, settings.title_classname)
-        day = get_tag(parent, settings.day_tag, settings)
-
+        day = get_tag(parent, settings.day_tag, settings.day_classname)
         data.append(
             Tender(
-                source="",
+                source=settings.output_filename,
                 title=title.get_text(strip=True) if title else None,
                 url=href,
                 price=None,
                 deadline=day.get_text(strip=True) if day else None,
             )
         )
+
+    return data

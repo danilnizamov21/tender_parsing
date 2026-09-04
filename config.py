@@ -15,6 +15,8 @@ class SiteConfig:
     title_classname: str | None
     day_tag: str | None
     day_classname: str | None
+    cost_tag: str | None
+    cost_classname: str | None
 
 
 ROSTENDER = SiteConfig(
@@ -25,6 +27,8 @@ ROSTENDER = SiteConfig(
     "#keywords",
     "#exceptions",
     "#start-search-button",
+    None,
+    None,
     None,
     None,
     None,
@@ -45,6 +49,8 @@ BIDZAAR = SiteConfig(
     title_classname="name-item ui-name with-dot",
     day_tag="div",
     day_classname="date",
+    cost_tag=None,
+    cost_classname=None,
 )
 
 B2B = SiteConfig(
@@ -60,6 +66,8 @@ B2B = SiteConfig(
     title_classname="search-results-title-desc",
     day_tag="td",
     day_classname="nowrap",
+    cost_tag=None,
+    cost_classname=None,
 )
 
 # ROSTORG = SiteConfig(

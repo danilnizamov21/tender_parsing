@@ -32,6 +32,7 @@ async def parse(html: str, settings: SiteConfig) -> list[Tender]:
             continue
         title = get_tag(parent, settings.title_tag, settings.title_classname)
         day = get_tag(parent, settings.day_tag, settings.day_classname)
+        if settings
         data.append(
             Tender(
                 source=settings.output_filename,

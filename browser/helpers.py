@@ -22,23 +22,25 @@ async def search(page, settings: SiteConfig):
 async def parse(html: str, settings: SiteConfig) -> list[Tender]:
     data = []
     soup = create_xml(html)
-    parents = get_all_parent_tag(soup, settings.parents_tag)
+    parents = get_all_parent_tag(soup, settings.parents_tag, settings.parents_classname)
 
     for parent in parents:
+        price = None
         a = get_tag_a(parent)
-        print(a)
+
         href = get_href_from_a(a) if a else None
         if not href:
             continue
         title = get_tag(parent, settings.title_tag, settings.title_classname)
         day = get_tag(parent, settings.day_tag, settings.day_classname)
-        if settings
+        if settings.cost_tag is not None:
+            price = get_tag(parent, settings.cost_tag, settings.cost_classname)
         data.append(
             Tender(
                 source=settings.output_filename,
                 title=title.get_text(strip=True) if title else None,
                 url=href,
-                price=None,
+                price=price.get_text(strip=True) if price else None,
                 deadline=day.get_text(strip=True) if day else None,
             )
         )

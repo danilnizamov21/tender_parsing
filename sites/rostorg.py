@@ -9,7 +9,7 @@ class RostorgSite:
         self.settings = settings
 
     async def page_search(self, page: Page):
-        return search(page, self.settings)
+        return await search(page, self.settings)
 
     async def urls(self, url: str, html: str) -> list[str]:
 

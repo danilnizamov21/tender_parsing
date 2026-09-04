@@ -11,6 +11,7 @@ class SiteConfig:
     exlude_input: str | None
     search_button: str | None
     parents_tag: str | None
+    parents_classname: str | None
     title_tag: str | None
     title_classname: str | None
     day_tag: str | None
@@ -34,6 +35,7 @@ ROSTENDER = SiteConfig(
     None,
     None,
     None,
+    None,
 )
 
 BIDZAAR = SiteConfig(
@@ -45,6 +47,7 @@ BIDZAAR = SiteConfig(
     exlude_input=None,
     search_button=None,
     parents_tag="li",
+    parents_classname=None,
     title_tag="span",
     title_classname="name-item ui-name with-dot",
     day_tag="div",
@@ -62,6 +65,7 @@ B2B = SiteConfig(
     exlude_input=None,
     search_button=None,
     parents_tag="tr",
+    parents_classname=None,
     title_tag="div",
     title_classname="search-results-title-desc",
     day_tag="td",
@@ -69,11 +73,35 @@ B2B = SiteConfig(
     cost_tag=None,
     cost_classname=None,
 )
+#  soup = await create_xml(html)
+#     parents = await get_parent_tag(soup, "div", "search-results__item autoload-post")
+#     for parent in parents:
+#         a = await get_tag_a(parent)
+#         href = await get_href_from_a(a)
+#         title = await get_tag(
+#             parent, "a", "search-results__link search-results__link--description"
+#         )
+#         cost = await get_tag(parent, "p", "tablet")
+#         day = await get_tag(parent, "time", "search-results__time")
 
-# ROSTORG = SiteConfig(
-#     url="https://www.roseltorg.ru/procedures/search",
-#     search="Видеосъемка",
-#     exception_serch=None,
-#     output_filename="rostorg",
-#     search_input=html_rostorg,
-# )
+#         title_text = title.get_text(strip=True) if title else "N/A"
+#         day_text = day.get_text(strip=True) if day else "N/A"
+#         cost_text = cost.get_text(strip=True) if cost else "N/A"
+
+ROSTORG = SiteConfig(
+    url="https://www.roseltorg.ru/procedures/search",
+    search="Видеосъемка",
+    exception_serch=None,
+    output_filename="rostorg",
+    search_input="input[name='query_field']",
+    exlude_input=None,
+    search_button=None,
+    parents_tag="div",
+    parents_classname="search-results__item autoload-post",
+    title_tag="a",
+    title_classname="search-results__link search-results__link--description",
+    day_tag="time",
+    day_classname="search-results__time",
+    cost_tag="p",
+    cost_classname="tablet",
+)

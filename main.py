@@ -2,9 +2,9 @@ import asyncio
 
 from playwright.async_api import async_playwright
 
-from config import B2B
+from config import ROSTORG
 from runner import SiteRunner
-from sites.b2b import B2BSite
+from sites.rostorg import RostorgSite
 
 
 async def browser(config):
@@ -12,7 +12,7 @@ async def browser(config):
         browser = await p.chromium.launch(headless=False)
         page = await browser.new_page()
 
-        site = B2BSite(config)
+        site = RostorgSite(config)
         runner = SiteRunner()
         await runner.run(site, page)
 
@@ -21,7 +21,7 @@ async def browser(config):
 
 async def main():
 
-    await browser(B2B)
+    await browser(ROSTORG)
 
 
 if __name__ == "__main__":

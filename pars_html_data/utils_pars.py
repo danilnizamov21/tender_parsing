@@ -30,7 +30,7 @@ def get_parent_tag(soup, tag, class_name=None):
 
 
 def get_tag_a(parent):
-    tag_a = parent.find("a", attrs={"data-testid": "prs-public-info-link"})
+    tag_a = parent.find("a")
     return tag_a
 
 

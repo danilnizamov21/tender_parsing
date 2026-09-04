@@ -73,20 +73,6 @@ B2B = SiteConfig(
     cost_tag=None,
     cost_classname=None,
 )
-#  soup = await create_xml(html)
-#     parents = await get_parent_tag(soup, "div", "search-results__item autoload-post")
-#     for parent in parents:
-#         a = await get_tag_a(parent)
-#         href = await get_href_from_a(a)
-#         title = await get_tag(
-#             parent, "a", "search-results__link search-results__link--description"
-#         )
-#         cost = await get_tag(parent, "p", "tablet")
-#         day = await get_tag(parent, "time", "search-results__time")
-
-#         title_text = title.get_text(strip=True) if title else "N/A"
-#         day_text = day.get_text(strip=True) if day else "N/A"
-#         cost_text = cost.get_text(strip=True) if cost else "N/A"
 
 ROSTORG = SiteConfig(
     url="https://www.roseltorg.ru/procedures/search",

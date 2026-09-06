@@ -34,7 +34,6 @@
 ## Требования
 
 - Python 3.12+
-- Chromium для Playwright (ставится отдельной командой, см. ниже)
 
 ## Установка
 
@@ -44,13 +43,8 @@
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-pip install openpyxl
-playwright install chromium
 ```
 
-`openpyxl` используется для Excel, в `requirements.txt` его может не быть — поставьте явно.
-
-Запускайте скрипты из **корня** проекта (`parser/`), не из `sites/`. Иначе сломаются импорты (`No module named 'browser'`).
 
 ## Настройка поиска
 
